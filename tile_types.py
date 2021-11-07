@@ -35,13 +35,13 @@ closed_door = new_tile(
     walkable=False, transparent=False, dark=(ord(" "), (255, 255, 255), (64, 64, 64)),
 )
 floor = new_tile(
-    walkable=True, transparent=True, dark=(ord(" "), (255, 255, 255), (50, 50, 150)),
+    walkable=True, transparent=True, dark=(ord(" "), (255, 255, 255), (222, 184, 135)),
 )
 wall = new_tile(
     walkable=False, transparent=False, dark=(ord(" "), (255, 255, 255), (0, 0, 100)),
 )
 dirt_road = new_tile(
-    walkable=True, transparent=True, dark=(ord(" "), (210, 105, 30), (210, 105, 30)),
+    walkable=True, transparent=True, dark=(ord(" "), (255, 255, 255), (210, 105, 30)),
 )
 open_door = new_tile(
     walkable=True, transparent=True, dark=(ord(" "), (255, 255, 255), (0, 0, 0)),

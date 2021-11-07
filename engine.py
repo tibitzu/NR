@@ -1,4 +1,4 @@
-from typing import Set, Iterable, Any
+from typing import Set, Iterable, Any, TYPE_CHECKING
 
 from tcod.context import Context
 from tcod.console import Console
@@ -6,6 +6,10 @@ from tcod.console import Console
 from entity import Entity
 from game_map import GameMap
 from input_handlers import EventHandler
+
+if TYPE_CHECKING:
+    from game_map import GameMap
+
 
 
 class Engine:

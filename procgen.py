@@ -50,32 +50,26 @@ def road_between(
 
 def generate_gates(map_width, map_height) -> GameMap:
     gate = GameMap(map_width, map_height)
-    gate_direction = random.random()
 
-    if gate_direction < 0.5:
-        gate_1 = RectangularRoom(x=39, y=-1, width=4, height=2)
-        gate_2 = RectangularRoom(x=39, y=43, width=4, height=2)
-    else:
+    gate_direction = random.random()
+    if gate_direction < 0.17:
+        gate_1 = RectangularRoom(x=38, y=-1, width=4, height=2)
+        gate_2 = RectangularRoom(x=38, y=43, width=4, height=2)
+    elif gate_direction < 0.35:
         gate_1 = RectangularRoom(x=-1, y=21, width=2, height=4)
         gate_2 = RectangularRoom(x=78, y=21, width=2, height=4)
-
-    """ Hoping to added further functionality
-    elif gate_direction < 0.5:
-        gate_1 = RectangularRoom(x=39, y=-1, width=4, height=2, y_axis=True)
-        gate_2 = RectangularRoom(x=-1, y=23, width=2, height=4, y_axis=False)
+    elif gate_direction < 0.35:
+        gate_1 = RectangularRoom(x=38, y=-1, width=4, height=2)
+        gate_2 = RectangularRoom(x=-1, y=21, width=2, height=4)
     elif gate_direction < 0.67:
-        gate_1 = RectangularRoom(x=39, y=-1, width=4, height=2, y_axis=True)
-        gate_2 = RectangularRoom(x=78, y=23, width=2, height=4, y_axis=False)
+        gate_1 = RectangularRoom(x=38, y=-1, width=4, height=2)
+        gate_2 = RectangularRoom(x=78, y=21, width=2, height=4)
     elif gate_direction < 0.83:
-        gate_1 = RectangularRoom(x=39, y=43, width=4, height=2, y_axis=True)
-        gate_2 = RectangularRoom(x=78, y=23, width=2, height=4, y_axis=False)
+        gate_1 = RectangularRoom(x=38, y=43, width=4, height=2)
+        gate_2 = RectangularRoom(x=78, y=21, width=2, height=4)
     else:
-        gate_1 = RectangularRoom(x=39, y=43, width=4, height=2, y_axis=True)
-        gate_2 = RectangularRoom(x=-1, y=23, width=2, height=4, y_axis=False)
-    """
-
-
-
+        gate_1 = RectangularRoom(x=38, y=43, width=4, height=2)
+        gate_2 = RectangularRoom(x=-1, y=21, width=2, height=4)
 
     gate.tiles[gate_1.inner] = tile_types.gate
     gate.tiles[gate_2.inner] = tile_types.gate

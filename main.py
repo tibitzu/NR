@@ -4,7 +4,7 @@ import tcod
 from engine import Engine
 from entity import Entity
 from input_handlers import EventHandler
-from procgen import generate_gates  # , generate_house
+from procgen import generate_gates, generate_house
 
 
 def main() -> None:
@@ -20,11 +20,11 @@ def main() -> None:
 
     event_handler = EventHandler()
 
-    player = Entity(int(screen_width / 2 -6), int(screen_height / 2), "@", (255, 255, 255))
+    player = Entity(int(screen_width / 2 - 6), int(screen_height / 2), "@", (0, 0, 0))
     npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), "@", (255, 255, 0))
     entities = {npc, player}
 
-    game_map = generate_gates(map_width, map_height) # , generate_house(map_width, map_height)
+    game_map = generate_gates(map_width, map_height), generate_gates(map_width, map_height)
 
     engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
 
