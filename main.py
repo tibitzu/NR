@@ -20,9 +20,12 @@ def main() -> None:
     npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), "@", (255, 255, 0))
     entities = {npc, player}
 
-    game_map = generate_town(max_houses=max_houses,
-                             house_min_size=house_min_size, house_max_size=house_max_size, map_width=map_width,
-                             map_height=map_height)
+    game_map = generate_town(
+        max_houses=max_houses,
+        house_min_size=house_min_size,
+        house_max_size=house_max_size,
+        map_width=map_width,
+        map_height=map_height)
 
     engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
 
@@ -30,7 +33,7 @@ def main() -> None:
             screen_width,
             screen_height,
             tileset=tileset,
-            title="Yet Another Roguelike Tutorial",
+            title="No Retreat",
             vsync=True,
     ) as context:
         root_console = tcod.Console(screen_width, screen_height, order="F")

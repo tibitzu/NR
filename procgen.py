@@ -18,14 +18,14 @@ class RectangularRoom:
         self.y2 = y + height
 
     @property
-    def center(self,) -> Tuple[int, int]:
+    def center(self, ) -> Tuple[int, int]:
         center_x = int((self.x1 + self.x2) / 2)
         center_y = int((self.y1 + self.y2) / 2)
 
         return center_x, center_y
 
     @property
-    def inner(self,) -> Tuple[slice, slice]:
+    def inner(self, ) -> Tuple[slice, slice]:
         # Return the inner area of this room as a 2d array index
         return slice(self.x1 + 1, self.x2), slice(self.y1 + 1, self.y2)
 
@@ -38,9 +38,9 @@ class RectangularRoom:
                 and self.y2 >= other.y1
         )
     
-    
+
 def road_between(
-    start: Tuple[int, int], end: Tuple[int, int]
+        start: Tuple[int, int], end: Tuple[int, int]
 ) -> Iterator[Tuple[int, int]]:
     """Return an L-shaped tunnel between these two points."""
     x1, y1 = start
@@ -62,6 +62,27 @@ def road_between(
 def generate_town(map_width, map_height, max_houses, house_min_size, house_max_size, ) -> GameMap:
     # Generate a new town map
     town = GameMap(map_width, map_height)
+    
+    houses: List[RectangularRoom] = []
+
+    for i in range(max_houses):
+        house_width = random.randint(house_min_size, house_max_size)
+        house_height = random.randint(house_min_size, house_max_size)
+
+        x = random.randint(0, town.width - house_width - 1)
+        y = random.randint(0, town.height - house_height - 1)
+
+        # "RectangularRoom" class makes rectangles easier to work with
+        new_house = RectangularRoom(x, y, house_width, house_height)
+
+        # Run through the other houses and see if they intersect with this one.
+        if any(new_house.intersects(other_house) for other_house in houses):
+            continue
+
+        town.tiles[new_house.inner] = tile_types.wall
+
+        houses.append(new_house)
+
     gate_position_x = random.randint(0, 80)
     gate_position_y = random.randint(0, 42)
     gate_direction = random.random()
@@ -90,28 +111,8 @@ def generate_town(map_width, map_height, max_houses, house_min_size, house_max_s
     for x, y in road_between(gate_2.center, gate_1.center):
         town.tiles[x, y] = tile_types.dirt_road
 
-    houses: List[RectangularRoom] = []
-
-    for r in range(max_houses):
-        house_width = random.randint(house_min_size, house_max_size)
-        house_height = random.randint(house_min_size, house_max_size)
-
-        x = random.randint(0, town.width - house_width - 1)
-        y = random.randint(0, town.height - house_height - 1)
-        
-        # "RectangularRoom" class makes rectangles easier to work with
-        new_house = RectangularRoom(x, y, house_width, house_height)
-
-        # Run through the other rooms and see if they intersect with this one.
-        if any(new_house.intersects(other_house) for other_house in houses):
-            continue  # This room intersects, so go to the next attempt.
-        # If there are no intersections then the room is valid.
-
-        town.tiles[new_house.inner] = tile_types.wall
-
-        houses.append(new_house)
-
     return town
+
 
 """
 def generate_dungeon(
@@ -124,27 +125,20 @@ def generate_dungeon(
 ) -> GameMap:
     Generate a new dungeon map.
     dungeon = GameMap(map_width, map_height)
-
 rooms: List[RectangularRoom] = []
-
     for r in range(max_rooms):
         room_width = random.randint(room_min_size, room_max_size)
         room_height = random.randint(room_min_size, room_max_size)
-
         x = random.randint(0, dungeon.width - room_width - 1)
         y = random.randint(0, dungeon.height - room_height - 1)
-
         # "RectangularRoom" class makes rectangles easier to work with
         new_room = RectangularRoom(x, y, room_width, room_height)
-
         # Run through the other rooms and see if they intersect with this one.
         if any(new_room.intersects(other_room) for other_room in rooms):
             continue  # This room intersects, so go to the next attempt.
         # If there are no intersections then the room is valid.
-
         # Dig out this rooms inner area.
         dungeon.tiles[new_room.inner] = tile_types.floor
-
         if len(rooms) == 0:
             # The first room, where the player starts.
             player.x, player.y = new_room.center
@@ -152,8 +146,6 @@ rooms: List[RectangularRoom] = []
             # Dig out a tunnel between this room and the previous one.
             for x, y in tunnel_between(rooms[-1].center, new_room.center):
                 dungeon.tiles[x, y] = tile_types.floor
-
         # Finally, append the new room to the list.
         rooms.append(new_room)
-        
 """
